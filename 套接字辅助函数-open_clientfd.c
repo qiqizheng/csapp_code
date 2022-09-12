@@ -1,14 +1,14 @@
 /**
-open_listenfd函数打开并返回一个监听描述符，这个描述符在一个准备好的port上接收请求。
+open_clientfd 函数建立与服务端的连接
 **/
 
 #include "csapp.h"
 
 
-int open_listenfd(char *port)
+int open_clientfd(char *hostname, char *port)
 {
- struct addrinfo hints, *listp, *p;
- int listenfd, optval=1;
+ int clientfd;
+ struct addrinfo hints, *listp ,*p;
  
  //将hints赋值, 大小为sizeof,值为0。
  memset(&hints, 0, sizeof(struct addrinfo));
