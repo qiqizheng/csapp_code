@@ -10,7 +10,7 @@ int open_listenfd(char *port)
  struct addrinfo hints, *listp, *p;
  int listenfd, optval=1;
  
- //将hints赋值为大小为sizeof值为0的。
+ //将hints赋值, 大小为sizeof,值为0。
  memset(&hints, 0, sizeof(struct addrinfo));
  
  hints.ai_socktype = SOCK_STREAM;               //打开一个连接
@@ -22,12 +22,22 @@ int open_listenfd(char *port)
  
  for(p =listp; p;p=p->ai_next){
     /**创建一个socket描述符**/
-    
     //socket创建失败， 再次尝试
     if((clientfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol )) < 0) continue;
    
-    if()
+    /**连接服务端**/
+    //连接成功
+    if(connect(clientfd, p->ai_addr, p->ai_addrlen) != -1) break; 
+    //连接失败，再次尝试连接
+    close(clientfd); 
  }
+ 
+ Freeaddrinfo(listp);
+ //全部连接失败，返回-1。 连接成功的，返回描述符。
+ if(!p) 
+  return -1;
+ else
+  return clientfd;
  
 
 }
