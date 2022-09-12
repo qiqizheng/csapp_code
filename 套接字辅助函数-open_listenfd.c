@@ -31,7 +31,7 @@ int open_listenfd(char *port)
     //连接失败，再次尝试连接
     close(clientfd); 
  }
- 
+ //释放listp,以免内存泄漏。
  Freeaddrinfo(listp);
  //全部连接失败，返回-1。 连接成功的，返回描述符。
  if(!p) 
