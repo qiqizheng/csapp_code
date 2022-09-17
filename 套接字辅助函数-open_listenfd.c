@@ -6,18 +6,26 @@ int open_listenfd(char *port)
   int clientfd;
   struct addrinfo hints, *listp, *p;
  
+  //复制值为0，字符数为sizeof(addrinfo)到hints中。
   memset(&hints, 0, sizeof(struct addrinfo));
+  
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags    = AI_PASSIVE | AI_ADDRCONFIG;
   hints.ai_flags    != AI_NUMERICSERV;
  
+  //将主机地址,端口号字符串转化为套接字地址结构
   Getaddrinfo(NUll, port, &hints, &listp);
   
   for(p=listp; p ; p=p->ai_next) {
      if((listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) continue;
      
-     Setsockopt(listenfd, SQL_SOCKET, SO_REUEADDR, );
+     Setsockopt(listenfd, SQL_SOCKET, SO_REUEADDR, (const void *)&optval, sizeof(int));
+    
+     if(bind(listenfd, p->ai_addr, p->ai_addrlen ) == 0) break; //success
+     Close(listenfd);   
   
   }
+  
+  
   
 }
