@@ -17,15 +17,25 @@ int open_listenfd(char *port)
   Getaddrinfo(NUll, port, &hints, &listp);
   
   for(p=listp; p ; p=p->ai_next) {
+    //创建一个描述符
      if((listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) continue;
      
      Setsockopt(listenfd, SQL_SOCKET, SO_REUEADDR, (const void *)&optval, sizeof(int));
-    
+     
+     //将创建的描述符和主机地址绑定
      if(bind(listenfd, p->ai_addr, p->ai_addrlen ) == 0) break; //success
      Close(listenfd);   
   
   }
   
+  Freeaddrinfo(listp);
+  if(!p) return -1;
   
+  //将listenfd转换为一个监听描述符
+  if(listen(listenfd, LISTENQ) < 0){
+    close(listenfd);
+    return -1;
+  }
+  return listenfd;
   
 }
