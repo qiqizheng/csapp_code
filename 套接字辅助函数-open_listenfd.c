@@ -27,7 +27,7 @@ int open_listenfd(char *port)
      Close(listenfd);   
   
   }
-  
+  //释放listp，以免内存泄漏
   Freeaddrinfo(listp);
   if(!p) return -1;
   
