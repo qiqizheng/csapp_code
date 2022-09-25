@@ -9,11 +9,16 @@ int main()
 		exit(1);
 	}
 	
-	//
+	//创建监听描述符， 监听客户端请求
 	listenfd = open_listenfd(argv[1]);
 	while(1){
 	   clientlen = sizeof(clientaddr);
+	   //检测到有客户端请求， 返回一个已连接描述符	
 	   connfd    = Accept(listenfd, (SA *)&clientaddr, &clientlen);
-    Getnameinfo 
+	   //将描述符地址转换为主机地址	
+           Getnameinfo (SA *) &clientaddr ,clientlen, hostname, MAXLINE, port, MAXLINE, 0);
+	   printf("Accepted connection from (%s %s)\n", hostname , port);
+	   doit(connfd);
+	   Close(connfd);
 	}
 }
