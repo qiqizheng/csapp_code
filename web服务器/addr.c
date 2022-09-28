@@ -22,3 +22,16 @@ int main()
 	   Close(connfd);
 	}
 }
+
+/**处理http事务
+**/
+void doit(int fd){
+   int is_static;
+   char buf[MAXLINE], method[MAXLINE], uri[MAXLINE], version[MAXLINE];
+   char filename[MAXLINE], cgiargs[MAXLINE];
+   rio_t rio;
+	
+   Rio_readinitb(&rio, fd);
+   Rio_readlineb(&rio, buf, MAXLINE);
+
+}
