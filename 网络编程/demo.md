@@ -14,7 +14,7 @@ int main(int argc, char **argv)
    }
    
    /**获取addrinfo的列表**/
-   memset(&hints, 0, sizeof(struct addrinfo)); //填充大小为addrinfo，值为0的字符到内存hints处。
+   memset(&hints, 0, sizeof(struct addrinfo)); //填充大小为addrinfo，值为0的字符到内存hints处。 将hints清0。
    hints.ai_family = AF_INET;
    hints.ai_socktype = SOCK_STREAM;
    
